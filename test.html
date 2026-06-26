@@ -529,21 +529,21 @@
 <script>
   // Base de données centralisée 
   const projetsData = [
-    {
-      id: "p-fouju",
-      name: "Fouju",
-      griefs: {
-        foncier: { level: "fort", text: "Artificialisation : Impact Fort sur des terres agricoles fertiles de la Brie." },
-        eau: { level: "moyen", text: "Consommation hydrique : Impact Moyen lié aux projections de refroidissement du campus." },
-        energie: { level: "fort", text: "Consommation électrique : Tension Forte sur le réseau, contestée par FNE 77." },
-        biodiv: { level: "absent", text: "Donnée non documentée explicitement dans les rapports de crise environnementaux." },
-        sante: { level: "moyen", text: "Risques sanitaires : Impact Moyen / Inquiétudes riveraines sur la proximité." },
-        pfas: { level: "fort", text: "Fluides frigorifiques toxiques : Fort rejet identifié par les experts comme axe d'attaque clé." },
-        concert: { level: "moyen", text: "Transparence des débats : Impact Moyen / Transparence exigée par le collectif." },
-        procedure: { level: "fort", text: "Procédure accélérée critiquée : Fort rejet des méthodes d'urbanisme Fast-Track." },
-        emploi: { level: "absent", text: "Donnée non documentée à ce stade." },
-        souver: { level: "moyen", text: "Souveraineté disputée : Débat Moyen sur le stockage européen versus opérateurs hors-UE." },
-        securite: { level: "absent", text: "Grief absent des axes d'oppositions documentés." }
+   {
+  id: "p-fouju",
+  name: "Campus IA Fouju",
+  griefs: {
+    foncier: { level: "fort", text: "Axe Foncier : Destruction et artificialisation irréversible de 70 à 90 hectares de terres agricoles céréalières de haute qualité de la plaine de la Brie, correspondant à la surface de 130 terrains de football. Verbatim : 'On parle de 70 hectares artificialisés sur 90 hectares d'emprise totale. C’est l'équivalent de plus de 100 terrains de foot artificialisés sur de très bonnes terres' (Aline Aurias, Confédération paysanne)." },
+    eau: { level: "moyen", text: "Axe Eau : Choix initial d'une technologie de refroidissement à sec (dry cooling) sans prélèvement sur la nappe de Champigny pour calmer l'opposition locale, mais introduction d'une ambiguïté forte sur la phase 2 pour des solutions mixtes de réutilisation d'eaux industrielles. Verbatim : 'On demande aux agriculteurs de ne pas pomper dans les nappes en période de restriction, mais on a un projet qui évoque un refroidissement à l’eau. Tout ça reste extrêmement flou' (Pauline Isambert)." },
+    energie: { level: "fort", text: "Axe Énergie : Consommation électrique pharaonique de 1,4 gigawatt (10,5 TWh/an) représentant 2 % de la puissance nationale et 17 % de l'Île-de-France, saturant la file d'attente RTE sous procédure prioritaire Fast-Track. Verbatim : 'Le site global consommerait en une demi-journée autant d’électricité que Fouju en un an !'" },
+    biodiv: { level: "moyen", text: "Axe Biodiversité : Menace de destruction sur les habitats naturels de la Brie (chauve-souris, amphibiens, oiseaux), contestée par la LPO 77 malgré le plan de végétalisation et de compensation étalé sur 30 ans par le porteur. Verbatim : 'Le site abrite des espèces menacées de chauve-souris, d’amphibiens, d’insectes et d’oiseaux'." },
+    sante: { level: "moyen", text: "Axe Santé : Appréhensions majeures concernant le bruit permanent des 680 groupes réfrigérés sur les toitures, la fatigue auditive des travailleurs et la création d'un îlot de chaleur microclimatique. Verbatim : 'Les gens ici ne mesurent pas ce qui va leur arriver quand ils vont ouvrir les fenêtres, avec le bruit, la chaleur, les lumières' (Sénatrice Marianne Margaté)." },
+    pfas: { level: "fort", text: "Axe PFAS : Utilisation massive de 514,3 tonnes de fluides frigorigènes fluorés (HFC) entraînant, selon les données officielles de la MRAe, une fuite normale de 3 % libérant 15 tonnes de polluants éternels (TFA) par an dans l'atmosphère. Verbatim : 'Le Campus IA prévoit d’émettre dans l’atmosphère, chaque année, jusqu’à 15 tonnes de PFAS aux effets mal connus'." },
+    concert: { level: "moyen", text: "Axe Concertation : Saisine volontaire de la CNDP en 2025 pour légitimer le dialogue, mais opacité financière totale imposée au nom du secret des affaires sur la répartition réelle du capital, doublée d'un refus de rallonge de l'enquête publique. Verbatim : 'Ce refus total de donner plus de temps et d’espace à l’expression du public est choquant à propos d’un projet présenté comme le plus important d’Europe' (FNE)." },
+    procedure: { level: "fort", text: "Axe Procédure : Contestation aiguë d'une enquête menée au pas de charge (30 avril - 30 mai 2026) couplée à l'application opportuniste du décret de Projet d'intérêt national majeur (PINM) et d'un découpage de site destiné à s'affranchir de la directive Seveso. Verbatim : 'Je trouve révoltant qu’un projet de cette envergure [...] se retrouve ainsi découpé dans le but d’éviter le classement en Seveso' (Marianne Margaté)." },
+    emploi: { level: "moyen", text: "Axe Emploi : Contestation du ratio investissement/emploi (50 milliards d'euros pour seulement 300 à 500 postes permanents), qualifié de mirage d'emplois précarisés et pénibles. Verbatim : 'Ce sera du nettoyage, de la sécurité par des boîtes privées... Ce n’est pas l’emploi qualifié que les géants du numérique nous vendent' (Député Arnaud Saint-Martin)." },
+    souver: { level: "fort", text: "Axe Souveraineté : Conflit géopolitique majeur sur l'usage du concept de souveraineté pour une infrastructure contrôlée à 70 % par un fonds souverain autocratique des Émirats arabes unis (MGX) intimement lié à l'administration Trump et aux technologies de puces américaines Nvidia. Verbatim : 'Dire que cela va armer la souveraineté numérique de la France est une imposture... C’est une souveraineté numérique en trompe-l’œil que l’on accueille'." },
+    securite: { level: "fort", text: "Axe Sécurité : Risque industriel et d'incendie majeur induit par le stockage permanent et enterré de 31 000 tonnes de carburant fioul HVO nécessaire pour faire tourner les 613 générateurs de secours de 30 mètres de haut. Verbatim : 'Rien que le stockage de plus de 30 000 tonnes de fioul dépasse les seuils'." }
       }
     },
    {
