@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<!-- saved from url=(0135)file:///C:/Users/ROMANZ~1/AppData/Local/Temp/MicrosoftEdgeDownloads/e5ac3c5f-b202-4b96-b1bb-57b1421e14d1/gemini-code-1782467511191.html -->
-<html lang="fr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  
+<html lang="fr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title>Tableau de bord interactif — Matrices des data centers</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
@@ -219,7 +219,6 @@
       gap: 20px;
     }
     .project-card {
-      background: var(--panel);
       border: 1px solid var(--border);
       border-radius: 12px;
       overflow: hidden;
@@ -261,9 +260,9 @@
 <div class="container">
   
   <div class="tabs">
-    <button class="tab-btn" onclick="switchTab(event, &#39;tab-conflict&#39;)">1. Conflictualité &amp; risques</button>
-    <button class="tab-btn active" onclick="switchTab(event, &#39;tab-griefs&#39;)">2. Analyse des oppositions</button>
-    <button class="tab-btn" onclick="switchTab(event, &#39;tab-recits&#39;)">3. Matrice des récits (Fouju/Bosquel...)</button>
+    <button class="tab-btn" onclick="switchTab(event, 'tab-conflict')">1. Conflictualité &amp; risques</button>
+    <button class="tab-btn active" onclick="switchTab(event, 'tab-griefs')">2. Analyse des oppositions</button>
+    <button class="tab-btn" onclick="switchTab(event, 'tab-recits')">3. Matrice des récits (Fouju/Bosquel...)</button>
   </div>
 
   <div id="tab-conflict" class="tab-content">
@@ -285,7 +284,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr id="c-fouju" class="">
+            <tr id="c-fouju">
               <td><strong>Campus IA Fouju</strong></td>
               <td><span class="dot-indicator dot-fort">FORT</span></td>
               <td>Nombreux opposants nommés, associations, experts, procédure contestée.</td>
@@ -318,7 +317,7 @@
                 <div class="gauge-container"><div class="gauge-bar gauge-fort"></div></div>
               </td>
             </tr>
-            <tr id="c-bosquel" class="highlighted-row">
+            <tr id="c-bosquel">
               <td><strong>Bosquel</strong></td>
               <td><span class="dot-indicator dot-moyen">MOYEN FAIBLE</span></td>
               <td>Inquiétude eau, demande d'étude indépendante.</td>
@@ -392,145 +391,14 @@
               <th style="text-align:center;">Sécurité</th>
             </tr>
           </thead>
-          <tbody id="matrix-body"><tr id="p-fouju" class=""><td><strong>Fouju</strong></td><td class="heatmap-cell cell-fort" onclick="showVerbatim(&#39;Fouju&#39;, &#39;foncier&#39;, &#39;fort&#39;, &#39;Artificialisation : Impact Fort sur des terres agricoles fertiles de la Brie.&#39;)">
-                    Fort
-                    </td><td class="heatmap-cell cell-moyen" onclick="showVerbatim(&#39;Fouju&#39;, &#39;eau&#39;, &#39;moyen&#39;, &#39;Consommation hydrique : Impact Moyen lié aux projections de refroidissement du campus.&#39;)">
-                    Moyen
-                    </td><td class="heatmap-cell cell-fort" onclick="showVerbatim(&#39;Fouju&#39;, &#39;energie&#39;, &#39;fort&#39;, &#39;Consommation électrique : Tension Forte sur le réseau, contestée par FNE 77.&#39;)">
-                    Fort
-                    </td><td class="heatmap-cell cell-absent" onclick="showVerbatim(&#39;Fouju&#39;, &#39;biodiv&#39;, &#39;absent&#39;, &#39;Donnée non documentée explicitement dans les rapports de crise environnementaux.&#39;)">
-                    N.D.
-                    </td><td class="heatmap-cell cell-moyen" onclick="showVerbatim(&#39;Fouju&#39;, &#39;sante&#39;, &#39;moyen&#39;, &#39;Risques sanitaires : Impact Moyen / Inquiétudes riveraines sur la proximité.&#39;)">
-                    Moyen
-                    </td><td class="heatmap-cell cell-fort" onclick="showVerbatim(&#39;Fouju&#39;, &#39;pfas&#39;, &#39;fort&#39;, &#39;Fluides frigorifiques toxiques : Fort rejet identifié par les experts comme axe d&#39;attaque clé.&#39;)">
-                    Fort
-                    </td><td class="heatmap-cell cell-moyen" onclick="showVerbatim(&#39;Fouju&#39;, &#39;concert&#39;, &#39;moyen&#39;, &#39;Transparence des débats : Impact Moyen / Transparence exigée par le collectif.&#39;)">
-                    Moyen
-                    </td><td class="heatmap-cell cell-fort" onclick="showVerbatim(&#39;Fouju&#39;, &#39;procedure&#39;, &#39;fort&#39;, &#39;Procédure accélérée critiquée : Fort rejet des méthodes d&#39;urbanisme Fast-Track.&#39;)">
-                    Fort
-                    </td><td class="heatmap-cell cell-absent" onclick="showVerbatim(&#39;Fouju&#39;, &#39;emploi&#39;, &#39;absent&#39;, &#39;Donnée non documentée à ce stade.&#39;)">
-                    N.D.
-                    </td><td class="heatmap-cell cell-moyen" onclick="showVerbatim(&#39;Fouju&#39;, &#39;souver&#39;, &#39;moyen&#39;, &#39;Souveraineté disputée : Débat Moyen sur le stockage européen versus opérateurs hors-UE.&#39;)">
-                    Moyen
-                    </td><td class="heatmap-cell cell-absent" onclick="showVerbatim(&#39;Fouju&#39;, &#39;securite&#39;, &#39;absent&#39;, &#39;Grief absent des axes d&#39;oppositions documentés.&#39;)">
-                    N.D.
-                    </td></tr><tr id="p-escaudain"><td><strong>Escaudain</strong></td><td class="heatmap-cell cell-faible" onclick="showVerbatim(&#39;Escaudain&#39;, &#39;foncier&#39;, &#39;faible&#39;, &#39;Usage foncier : Faible (Reconversion positive d&#39;une ancienne friche sidérurgique Usinor).&#39;)">
-                    Faible
-                    </td><td class="heatmap-cell cell-absent" onclick="showVerbatim(&#39;Escaudain&#39;, &#39;eau&#39;, &#39;absent&#39;, &#39;Donnée hydrique non documentée dans le dossier.&#39;)">
-                    N.D.
-                    </td><td class="heatmap-cell cell-moyen" onclick="showVerbatim(&#39;Escaudain&#39;, &#39;energie&#39;, &#39;moyen&#39;, &#39;Consommation électrique : Impact Moyen lié au calibrage des besoins (700 MW).&#39;)">
-                    Moyen
-                    </td><td class="heatmap-cell cell-absent" onclick="showVerbatim(&#39;Escaudain&#39;, &#39;biodiv&#39;, &#39;absent&#39;, &#39;Donnée non documentée.&#39;)">
-                    N.D.
-                    </td><td class="heatmap-cell cell-absent" onclick="showVerbatim(&#39;Escaudain&#39;, &#39;sante&#39;, &#39;absent&#39;, &#39;Donnée non documentée.&#39;)">
-                    N.D.
-                    </td><td class="heatmap-cell cell-absent" onclick="showVerbatim(&#39;Escaudain&#39;, &#39;pfas&#39;, &#39;absent&#39;, &#39;Grief Absent du dossier.&#39;)">
-                    N.D.
-                    </td><td class="heatmap-cell cell-absent" onclick="showVerbatim(&#39;Escaudain&#39;, &#39;concert&#39;, &#39;absent&#39;, &#39;Donnée non documentée.&#39;)">
-                    N.D.
-                    </td><td class="heatmap-cell cell-faible" onclick="showVerbatim(&#39;Escaudain&#39;, &#39;procedure&#39;, &#39;faible&#39;, &#39;Fast Track présent mais bien intégré et non critiqué localement.&#39;)">
-                    Faible
-                    </td><td class="heatmap-cell cell-fort" onclick="showVerbatim(&#39;Escaudain&#39;, &#39;emploi&#39;, &#39;fort&#39;, &#39;Emploi : Fort levier positif utilisé comme promesse de réindustrialisation lourde.&#39;)">
-                    Fort
-                    </td><td class="heatmap-cell cell-moyen" onclick="showVerbatim(&#39;Escaudain&#39;, &#39;souver&#39;, &#39;moyen&#39;, &#39;Souveraineté : Positionnement Moyen au sein du récit industriel territorial.&#39;)">
-                    Moyen
-                    </td><td class="heatmap-cell cell-absent" onclick="showVerbatim(&#39;Escaudain&#39;, &#39;securite&#39;, &#39;absent&#39;, &#39;Donnée non documentée.&#39;)">
-                    N.D.
-                    </td></tr><tr id="p-bosquel" class="highlighted-row"><td><strong>Bosquel</strong></td><td class="heatmap-cell cell-moyen" onclick="showVerbatim(&#39;Bosquel&#39;, &#39;foncier&#39;, &#39;moyen&#39;, &#39;Usage foncier : Impact Moyen sur l&#39;aménagement de la ZAC de 46 ha.&#39;)">
-                    Moyen
-                    </td><td class="heatmap-cell cell-moyen" onclick="showVerbatim(&#39;Bosquel&#39;, &#39;eau&#39;, &#39;moyen&#39;, &#39;Inquiétude sur la nappe phréatique : Impact Moyen / Demande d&#39;étude indépendante par A. De Monclin.&#39;)">
-                    Moyen
-                    </td><td class="heatmap-cell cell-fort" onclick="showVerbatim(&#39;Bosquel&#39;, &#39;energie&#39;, &#39;fort&#39;, &#39;Consommation électrique : Impact Fort (1 GW pré-réservé auprès de RTE).&#39;)">
-                    Fort
-                    </td><td class="heatmap-cell cell-absent" onclick="showVerbatim(&#39;Bosquel&#39;, &#39;biodiv&#39;, &#39;absent&#39;, &#39;Donnée non documentée.&#39;)">
-                    N.D.
-                    </td><td class="heatmap-cell cell-absent" onclick="showVerbatim(&#39;Bosquel&#39;, &#39;sante&#39;, &#39;absent&#39;, &#39;Donnée non documentée.&#39;)">
-                    N.D.
-                    </td><td class="heatmap-cell cell-absent" onclick="showVerbatim(&#39;Bosquel&#39;, &#39;pfas&#39;, &#39;absent&#39;, &#39;Grief Absent du dossier (Silver Bands France).&#39;)">
-                    N.D.
-                    </td><td class="heatmap-cell cell-faible" onclick="showVerbatim(&#39;Bosquel&#39;, &#39;concert&#39;, &#39;faible&#39;, &#39;Concertation : Faible tension suite aux promesses de présentations directes aux riverains.&#39;)">
-                    Faible
-                    </td><td class="heatmap-cell cell-fort" onclick="showVerbatim(&#39;Bosquel&#39;, &#39;procedure&#39;, &#39;fort&#39;, &#39;Fast Track RTE : Impact procédural Fort, centralisé au cœur des discussions.&#39;)">
-                    Fort
-                    </td><td class="heatmap-cell cell-faible" onclick="showVerbatim(&#39;Bosquel&#39;, &#39;emploi&#39;, &#39;faible&#39;, &#39;Emploi : Impact Faible perçu / Obligations de stages étudiants jugées légères.&#39;)">
-                    Faible
-                    </td><td class="heatmap-cell cell-moyen" onclick="showVerbatim(&#39;Bosquel&#39;, &#39;souver&#39;, &#39;moyen&#39;, &#39;Souveraineté : Impact Moyen au sein du pôle technologique d&#39;avenir.&#39;)">
-                    Moyen
-                    </td><td class="heatmap-cell cell-absent" onclick="showVerbatim(&#39;Bosquel&#39;, &#39;securite&#39;, &#39;absent&#39;, &#39;Donnée non documentée.&#39;)">
-                    N.D.
-                    </td></tr><tr id="p-pennes"><td><strong>Les Pennes-Mirabeau</strong></td><td class="heatmap-cell cell-moyen" onclick="showVerbatim(&#39;Les Pennes-Mirabeau&#39;, &#39;foncier&#39;, &#39;moyen&#39;, &#39;Usage foncier : Tension Moyenne sur l&#39;intégration urbaine du site Cézanne / Sybilles.&#39;)">
-                    Moyen
-                    </td><td class="heatmap-cell cell-moyen" onclick="showVerbatim(&#39;Les Pennes-Mirabeau&#39;, &#39;eau&#39;, &#39;moyen&#39;, &#39;Refroidissement / Rejets : Impact Moyen sur l&#39;évaluation thermique locale.&#39;)">
-                    Moyen
-                    </td><td class="heatmap-cell cell-fort" onclick="showVerbatim(&#39;Les Pennes-Mirabeau&#39;, &#39;energie&#39;, &#39;fort&#39;, &#39;Alimentation électrique contestée : Impact Fort de la puissance requise sur les infrastructures.&#39;)">
-                    Fort
-                    </td><td class="heatmap-cell cell-absent" onclick="showVerbatim(&#39;Les Pennes-Mirabeau&#39;, &#39;biodiv&#39;, &#39;absent&#39;, &#39;Donnée non documentée.&#39;)">
-                    N.D.
-                    </td><td class="heatmap-cell cell-fort" onclick="showVerbatim(&#39;Les Pennes-Mirabeau&#39;, &#39;sante&#39;, &#39;fort&#39;, &#39;Risques sanitaires et pollution : Impact Fort soulevé par le Collectif Non au data center.&#39;)">
-                    Fort
-                    </td><td class="heatmap-cell cell-absent" onclick="showVerbatim(&#39;Les Pennes-Mirabeau&#39;, &#39;pfas&#39;, &#39;absent&#39;, &#39;Donnée non documentée.&#39;)">
-                    N.D.
-                    </td><td class="heatmap-cell cell-fort" onclick="showVerbatim(&#39;Les Pennes-Mirabeau&#39;, &#39;concert&#39;, &#39;fort&#39;, &#39;Concertation jugée insuffisante : Très forte opposition des CIQ et maires critiques.&#39;)">
-                    Fort
-                    </td><td class="heatmap-cell cell-moyen" onclick="showVerbatim(&#39;Les Pennes-Mirabeau&#39;, &#39;procedure&#39;, &#39;moyen&#39;, &#39;Délais et permis : Impact Moyen sur la validation réglementaire du dossier.&#39;)">
-                    Moyen
-                    </td><td class="heatmap-cell cell-faible" onclick="showVerbatim(&#39;Les Pennes-Mirabeau&#39;, &#39;emploi&#39;, &#39;faible&#39;, &#39;Création d&#39;emplois contestée : Impact Faible (Mirage de l&#39;emploi technologique local).&#39;)">
-                    Faible
-                    </td><td class="heatmap-cell cell-faible" onclick="showVerbatim(&#39;Les Pennes-Mirabeau&#39;, &#39;souver&#39;, &#39;faible&#39;, &#39;Souveraineté / Utilité sociale : Récit Faible face à un opérateur international (Telehouse).&#39;)">
-                    Faible
-                    </td><td class="heatmap-cell cell-fort" onclick="showVerbatim(&#39;Les Pennes-Mirabeau&#39;, &#39;securite&#39;, &#39;fort&#39;, &#39;Risques incendie et sécurité : Impact Fort dû aux contraintes techniques de voisinage.&#39;)">
-                    Fort
-                    </td></tr><tr id="p-chateauroux"><td><strong>Châteauroux</strong></td><td class="heatmap-cell cell-fort" onclick="showVerbatim(&#39;Châteauroux&#39;, &#39;foncier&#39;, &#39;fort&#39;, &#39;Artificialisation : Fort impact politique et foncier (195 ha gelés pour Google Ozans).&#39;)">
-                    Fort
-                    </td><td class="heatmap-cell cell-moyen" onclick="showVerbatim(&#39;Châteauroux&#39;, &#39;eau&#39;, &#39;moyen&#39;, &#39;Refroidissement : Tension Moyenne liée à l&#39;implantation en zone de stress hydrique.&#39;)">
-                    Moyen
-                    </td><td class="heatmap-cell cell-fort" onclick="showVerbatim(&#39;Châteauroux&#39;, &#39;energie&#39;, &#39;fort&#39;, &#39;Lignes THT raccordement : Impact Fort sur le paysage et les infrastructures RTE.&#39;)">
-                    Fort
-                    </td><td class="heatmap-cell cell-moyen" onclick="showVerbatim(&#39;Châteauroux&#39;, &#39;biodiv&#39;, &#39;moyen&#39;, &#39;Habitats naturels impactés : Vigilance Moyenne des écologistes locaux.&#39;)">
-                    Moyen
-                    </td><td class="heatmap-cell cell-moyen" onclick="showVerbatim(&#39;Châteauroux&#39;, &#39;sante&#39;, &#39;moyen&#39;, &#39;Suivi des nuisances : Craintes Moyennes d&#39;îlots de chaleur thermique.&#39;)">
-                    Moyen
-                    </td><td class="heatmap-cell cell-moyen" onclick="showVerbatim(&#39;Châteauroux&#39;, &#39;pfas&#39;, &#39;moyen&#39;, &#39;Fluides techniques : Vigilance Moyenne exercée par l&#39;association &#39;Ozans dire non&#39;.&#39;)">
-                    Moyen
-                    </td><td class="heatmap-cell cell-fort" onclick="showVerbatim(&#39;Châteauroux&#39;, &#39;concert&#39;, &#39;fort&#39;, &#39;Concertation CNDP contestée : Forte opacité contractuelle dénoncée par le PCF et EELV.&#39;)">
-                    Fort
-                    </td><td class="heatmap-cell cell-absent" onclick="showVerbatim(&#39;Châteauroux&#39;, &#39;procedure&#39;, &#39;absent&#39;, &#39;Donnée non documentée.&#39;)">
-                    N.D.
-                    </td><td class="heatmap-cell cell-moyen" onclick="showVerbatim(&#39;Châteauroux&#39;, &#39;emploi&#39;, &#39;moyen&#39;, &#39;Emplois promis contestés : Scepticisme Moyen face au plan &#39;Indre 2030&#39;.&#39;)">
-                    Moyen
-                    </td><td class="heatmap-cell cell-moyen" onclick="showVerbatim(&#39;Châteauroux&#39;, &#39;souver&#39;, &#39;moyen&#39;, &#39;Souveraineté numérique GAFAM : Rejet Moyen de la dépendance aux infrastructures US.&#39;)">
-                    Moyen
-                    </td><td class="heatmap-cell cell-absent" onclick="showVerbatim(&#39;Châteauroux&#39;, &#39;securite&#39;, &#39;absent&#39;, &#39;Donnée non documentée.&#39;)">
-                    N.D.
-                    </td></tr><tr id="p-dunkerque"><td><strong>Dunkerque</strong></td><td class="heatmap-cell cell-faible" onclick="showVerbatim(&#39;Dunkerque&#39;, &#39;foncier&#39;, &#39;faible&#39;, &#39;Foncier portuaire : Faible tension / Utilisation industrielle d&#39;une zone dédiée.&#39;)">
-                    Faible
-                    </td><td class="heatmap-cell cell-absent" onclick="showVerbatim(&#39;Dunkerque&#39;, &#39;eau&#39;, &#39;absent&#39;, &#39;Donnée non documentée.&#39;)">
-                    N.D.
-                    </td><td class="heatmap-cell cell-fort" onclick="showVerbatim(&#39;Dunkerque&#39;, &#39;energie&#39;, &#39;fort&#39;, &#39;Électricité décarbonée majeure : Fort enjeu d&#39;accès direct aux capacités de production.&#39;)">
-                    Fort
-                    </td><td class="heatmap-cell cell-absent" onclick="showVerbatim(&#39;Dunkerque&#39;, &#39;biodiv&#39;, &#39;absent&#39;, &#39;Donnée non documentée.&#39;)">
-                    N.D.
-                    </td><td class="heatmap-cell cell-absent" onclick="showVerbatim(&#39;Dunkerque&#39;, &#39;sante&#39;, &#39;absent&#39;, &#39;Donnée non documentée.&#39;)">
-                    N.D.
-                    </td><td class="heatmap-cell cell-absent" onclick="showVerbatim(&#39;Dunkerque&#39;, &#39;pfas&#39;, &#39;absent&#39;, &#39;Grief Absent du dossier SoftBank.&#39;)">
-                    N.D.
-                    </td><td class="heatmap-cell cell-absent" onclick="showVerbatim(&#39;Dunkerque&#39;, &#39;concert&#39;, &#39;absent&#39;, &#39;Donnée non documentée (Forte coalition politique locale favorable).&#39;)">
-                    N.D.
-                    </td><td class="heatmap-cell cell-absent" onclick="showVerbatim(&#39;Dunkerque&#39;, &#39;procedure&#39;, &#39;absent&#39;, &#39;Donnée non documentée.&#39;)">
-                    N.D.
-                    </td><td class="heatmap-cell cell-fort" onclick="showVerbatim(&#39;Dunkerque&#39;, &#39;emploi&#39;, &#39;fort&#39;, &#39;Emploi : Fort impact positif (Argument central Choose France &amp; couplage Schneider).&#39;)">
-                    Fort
-                    </td><td class="heatmap-cell cell-fort" onclick="showVerbatim(&#39;Dunkerque&#39;, &#39;souver&#39;, &#39;fort&#39;, &#39;Souveraineté industrielle : Fort ancrage comme récit de réussite économique nationale.&#39;)">
-                    Fort
-                    </td><td class="heatmap-cell cell-absent" onclick="showVerbatim(&#39;Dunkerque&#39;, &#39;securite&#39;, &#39;absent&#39;, &#39;Donnée non documentée.&#39;)">
-                    N.D.
-                    </td></tr></tbody>
+          <tbody id="matrix-body">
+            </tbody>
         </table>
       </div>
       
-      <div id="verbatim-display" class="verbatim-panel" style="display: block;">
-        <h4 id="verbatim-title"><strong>Escaudain</strong> — Axe <strong>Énergie / Réseau</strong> — Qualification : <span style="text-transform: uppercase;">moyen</span></h4>
-        <p id="verbatim-content">Consommation électrique : Impact Moyen lié au calibrage des besoins (700 MW).</p>
+      <div id="verbatim-display" class="verbatim-panel">
+        <h4 id="verbatim-title">Sélectionnez une case pour voir le détail</h4>
+        <p id="verbatim-content">Les verbatims et analyses de crise s'afficheront ici au clic sur la matrice.</p>
       </div>
       
       <div class="legend-box" style="margin-top:20px;">
@@ -659,7 +527,7 @@
 </div>
 
 <script>
-  // Base de données centralisée (JSON standardisé pour faciliter les futures mises à jour automatisées)
+  // Base de données centralisée 
   const projetsData = [
     {
       id: "p-fouju",
@@ -696,21 +564,21 @@
       }
     },
     {
-  id: "p-bosquel",
-  name: "IA Factory Le Bosquel",
-  griefs: {
-    foncier: { level: "fort", text: "Axe Foncier : Artificialisation massive de 46 hectares de terres agricoles productives, collée à un tissu rural de 350 habitants. Verbatim : 'Ce que je vois, c'est qu'on va artificialiser 46 hectares de sol qui sont des champs à l'heure actuelle, et détruire mon cadre de vie.' (Camille Ego)." },
-    eau: { level: "moyen", text: "Axe Eau : Contestation forte sur l'impact hydrographique réel malgré l'affirmation d'un système en circuit fermé. Verbatim : 'Même si l'eau est en circuit fermé, on aurait une usine qui consommerait plus d'eau que le bassin de la population du Bosquel !' (Ex-cadre de la Dreal HDF)." },
-    energie: { level: "fort", text: "Axe Énergie : Consommation électrique hors norme nécessitant l'attribution prioritaire d'une puissance d'un gigawatt (1 GW à 1,4 GW) par RTE via le réseau THT des centrales nucléaires normandes. Verbatim : 'Ce centre de calcul consommerait autant d'électricité qu'une ville d'un million d'habitants.'" },
-    biodiv: { level: "absent", text: "Axe Biodiversité : Données non documentées spécifiquement dans le flux de veille actuel." },
-    sante: { level: "faible", text: "Axe Santé : Appréhensions locales diffuses concernant le bruit, le manque de recul et les émanations de chaleur à 500 mètres des habitations." },
-    pfas: { level: "absent", text: "Axe PFAS : Fluides frigorigènes non mentionnés dans les documents de cette période." },
-    concert: { level: "moyen", text: "Axe Concertation : Sentiment de mise devant le fait accompli et d'opacité institutionnelle corrigé tardivement par un briefing d'urgence avant l'annonce présidentielle. Verbatim : 'On s'est senti sacrifié parce qu'ils ne nous ont rien dit, ni fin août, ni en novembre...' (APROB2V)." },
-    procedure: { level: "moyen", text: "Axe Procédure : Utilisation des procédures accélérées 'Fast Track' de RTE et évitement des règles locales d'urbanisme via un rattachement d'intérêt régional, doublé d'une transaction financière secrète de 15 M€ pour purger les recours du précédent promoteur." },
-    emploi: { level: "moyen", text: "Axe Emploi : Débat vif sur l'efficience du ratio capitaux/emplois permanents. Annonce de 400 emplois qualifiés mise en doute par des données de contentieux prévoyant plutôt 10 à 15 postes d'exploitation informatique. Verbatim : 'Déjà le rapport investissement-emplois s'inverse sérieusement... Derrière un serveur, il n'y a pas de salariés.' (Robert Fievet / Analyse Éco)." },
-    souver: { level: "fort", text: "Axe Souveraineté : Projet érigé en vitrine absolue de Choose France 2026 par l'exécutif national pour bâtir une infrastructure souveraine européenne capable de réduire la dépendance technologique, bien que les capitaux soient détenus par un acteur étranger (SoftBank)." },
-    securite: { level: "absent", text: "Axe Sécurité : Risques physiques ou cyber-attaques non spécifiés dans les extraits de presse traités." }
-  }
+      id: "p-bosquel",
+      name: "IA Factory Le Bosquel",
+      griefs: {
+        foncier: { level: "fort", text: "Axe Foncier : Artificialisation massive de 46 hectares de terres agricoles productives, collée à un tissu rural de 350 habitants. Verbatim : 'Ce que je vois, c'est qu'on va artificialiser 46 hectares de sol qui sont des champs à l'heure actuelle, et détruire mon cadre de vie.' (Camille Ego)." },
+        eau: { level: "moyen", text: "Axe Eau : Contestation forte sur l'impact hydrographique réel malgré l'affirmation d'un système en circuit fermé. Verbatim : 'Même si l'eau est en circuit fermé, on aurait une usine qui consommerait plus d'eau que le bassin de la population du Bosquel !' (Ex-cadre de la Dreal HDF)." },
+        energie: { level: "fort", text: "Axe Énergie : Consommation électrique hors norme nécessitant l'attribution prioritaire d'une puissance d'un gigawatt (1 GW à 1,4 GW) par RTE via le réseau THT des centrales nucléaires normandes. Verbatim : 'Ce centre de calcul consommerait autant d'électricité qu'une ville d'un million d'habitants.'" },
+        biodiv: { level: "absent", text: "Axe Biodiversité : Données non documentées spécifiquement dans le flux de veille actuel." },
+        sante: { level: "faible", text: "Axe Santé : Appréhensions locales diffuses concernant le bruit, le manque de recul et les émanations de chaleur à 500 mètres des habitations." },
+        pfas: { level: "absent", text: "Axe PFAS : Fluides frigorigènes non mentionnés dans les documents de cette période." },
+        concert: { level: "moyen", text: "Axe Concertation : Sentiment de mise devant le fait accompli et d'opacité institutionnelle corrigé tardivement par un briefing d'urgence avant l'annonce présidentielle. Verbatim : 'On s'est senti sacrifié parce qu'ils ne nous ont rien dit, ni fin août, ni en novembre...' (APROB2V)." },
+        procedure: { level: "moyen", text: "Axe Procédure : Utilisation des procédures accélérées 'Fast Track' de RTE et évitement des règles locales d'urbanisme via un rattachement d'intérêt régional, doublé d'une transaction financière secrète de 15 M€ pour purger les recours du précédent promoteur." },
+        emploi: { level: "moyen", text: "Axe Emploi : Débat vif sur l'efficience du ratio capitaux/emplois permanents. Annonce de 400 emplois qualifiés mise en doute par des données de contentieux prévoyant plutôt 10 à 15 postes d'exploitation informatique. Verbatim : 'Déjà le rapport investissement-emplois s'inverse sérieusement... Derrière un serveur, il n'y a pas de salariés.' (Robert Fievet / Analyse Éco)." },
+        souver: { level: "fort", text: "Axe Souveraineté : Projet érigé en vitrine absolue de Choose France 2026 par l'exécutif national pour bâtir une infrastructure souveraine européenne capable de réduire la dépendance technologique, bien que les capitaux soient détenus par un acteur étranger (SoftBank)." },
+        securite: { level: "absent", text: "Axe Sécurité : Risques physiques ou cyber-attaques non spécifiés dans les extraits de presse traités." }
+      }
     },
     {
       id: "p-pennes",
@@ -765,7 +633,7 @@
     }
   ];
 
-  // Génération de la matrice thermique (Onglet 2)
+  // Génération saine de la matrice thermique (Passage par références ID sans concaténation brute de texte)
   function initMatrix() {
     const tbody = document.getElementById("matrix-body");
     tbody.innerHTML = "";
@@ -780,11 +648,8 @@
         const item = proj.griefs[key];
         const displayLevel = item.level === 'absent' ? 'N.D.' : item.level.charAt(0).toUpperCase() + item.level.slice(1);
         
-        // Sécurisation de la chaîne de texte pour le passage en attribut JS
-        const cleanText = item.text.replace(/'/g, "&apos;").replace(/"/g, "&quot;");
-        
         rowHtml += `<td class="heatmap-cell cell-${item.level}" 
-                        onclick="showVerbatim('${proj.name}', '${key}', '${item.level}', '${cleanText}')">
+                        onclick="showVerbatim('${proj.id}', '${key}')">
                     ${displayLevel}
                     </td>`;
       });
@@ -794,8 +659,14 @@
     });
   }
 
-  // Affichage du panneau de verbatims au clic
-  function showVerbatim(projectName, criteria, level, text) {
+  // Récupération dynamique et sécurisée du verbatim depuis l'objet JS (Plus de collision de guillemets)
+  function showVerbatim(projId, criteria) {
+    const proj = projetsData.find(p => p.id === projId);
+    if (!proj) return;
+    
+    const item = proj.griefs[criteria];
+    if (!item) return;
+
     const panel = document.getElementById("verbatim-display");
     const title = document.getElementById("verbatim-title");
     const content = document.getElementById("verbatim-content");
@@ -814,13 +685,13 @@
       securite: "Sécurité / Risques Incendie"
     };
 
-    title.innerHTML = `<strong>${projectName}</strong> — Axe <strong>${criteriaLabels[criteria] || criteria}</strong> — Qualification : <span style="text-transform: uppercase;">${level}</span>`;
-    content.innerText = text;
+    title.innerHTML = `<strong>${proj.name}</strong> — Axe <strong>${criteriaLabels[criteria] || criteria}</strong> — Qualification : <span style="text-transform: uppercase; color: var(--color-${item.level})">${item.level}</span>`;
+    content.innerText = item.text;
     
     panel.style.display = "block";
   }
 
-  // Gestion de la navigation entre onglets
+  // Navigation fluide entre onglets
   function switchTab(evt, tabId) {
     const tabContents = document.getElementsByClassName("tab-content");
     for (let i = 0; i < tabContents.length; i++) {
@@ -836,13 +707,12 @@
     evt.currentTarget.classList.add("active");
   }
 
-  // Fonction interactive de focus sur une ligne de projet (Synchronisée sur les onglets 1 et 2)
+  // Synchronisation du sélecteur de focus
   function highlightProject(rowId) {
     const rows = document.querySelectorAll("tbody tr");
     rows.forEach(row => row.classList.remove("highlighted-row"));
     
-    if (rowId !== "none") {
-      // Équivalence ID entre Onglet 1 (c-...) et Onglet 2 (p-...)
+    if (rowId != "none") {
       const suffix = rowId.split("-")[1];
       const targetRowTab1 = document.getElementById("c-" + suffix);
       const targetRowTab2 = document.getElementById("p-" + suffix);
@@ -852,11 +722,11 @@
     }
   }
 
-  // Initialisation au chargement de la page
+  // Initialisation au chargement
   window.onload = function() {
     initMatrix();
   };
 </script>
 
-
-</body></html>
+</body>
+</html>
