@@ -1,0 +1,969 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Matrice comparative des infrastructures électriques</title>
+  <style>
+    :root {
+      --bg: #f1f5f9;
+      --panel: #ffffff;
+      --text-main: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --primary: #1e1b4b;
+      --primary-light: #4338ca;
+      --color-fort: #ef4444;
+      --color-moyen: #f97316;
+      --color-faible: #22c55e;
+      --color-absent: #94a3b8;
+      --bg-fort: #fee2e2;
+      --bg-moyen: #ffedd5;
+      --bg-faible: #dcfce7;
+      --bg-absent: #f1f5f9;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+      line-height: 1.5;
+    }
+
+    header {
+      padding: 22px 24px;
+      color: #ffffff;
+      background: linear-gradient(135deg, #1e1b4b 0%, #311042 100%);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: -0.02em;
+    }
+
+    header p {
+      margin: 7px 0 0;
+      color: #cbd5e1;
+      font-size: 13.5px;
+    }
+
+    .container {
+      max-width: 1500px;
+      margin: 24px auto;
+      padding: 0 24px 36px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      margin-bottom: 20px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .tab-btn {
+      flex: 0 0 auto;
+      border: 0;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      padding: 12px 18px;
+      background: transparent;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .tab-btn:hover,
+    .tab-btn.active {
+      color: var(--primary-light);
+    }
+
+    .tab-btn.active {
+      border-bottom-color: var(--primary-light);
+    }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    .card {
+      margin-bottom: 24px;
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--panel);
+      box-shadow: 0 4px 8px rgba(15, 23, 42, 0.03);
+    }
+
+    .card-title {
+      margin: 0 0 14px;
+      padding-left: 9px;
+      border-left: 4px solid var(--primary-light);
+      color: var(--primary);
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .note {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 13.5px;
+    }
+
+    .table-responsive {
+      overflow-x: auto;
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th {
+      padding: 12px 14px;
+      background: #f8fafc;
+      border-bottom: 2px solid var(--border);
+      color: var(--muted);
+      font-size: 10.5px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-align: left;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 13px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+    tr:hover td { background: #f8fafc; }
+
+    .highlighted-row td {
+      background: #f5f3ff !important;
+      outline: 2px solid var(--primary-light);
+      outline-offset: -2px;
+    }
+
+    .dot-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .dot-indicator::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .level-fort { color: #b91c1c; background: var(--bg-fort); }
+    .level-moyen { color: #c2410c; background: var(--bg-moyen); }
+    .level-faible { color: #15803d; background: var(--bg-faible); }
+    .level-absent { color: #475569; background: var(--bg-absent); }
+
+    .gauge {
+      width: 100%;
+      height: 7px;
+      margin-top: 6px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e2e8f0;
+    }
+
+    .gauge span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+    }
+
+    .gauge-fort { width: 100%; background: var(--color-fort); }
+    .gauge-moyen { width: 62%; background: var(--color-moyen); }
+    .gauge-faible { width: 30%; background: var(--color-faible); }
+
+    .selector-box {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      font-size: 14px;
+    }
+
+    select {
+      min-width: 260px;
+      padding: 9px 11px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #ffffff;
+      color: var(--text-main);
+      font-size: 13px;
+    }
+
+    .heatmap-cell {
+      min-width: 74px;
+      padding: 11px 8px;
+      border: 0;
+      font-size: 10px;
+      font-weight: 800;
+      text-align: center;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .heatmap-cell:hover {
+      box-shadow: inset 0 0 0 2px rgba(15, 23, 42, 0.16);
+    }
+
+    button.heatmap-cell.level-fort { background: var(--bg-fort); color: var(--color-fort); }
+    button.heatmap-cell.level-moyen { background: var(--bg-moyen); color: var(--color-moyen); }
+    button.heatmap-cell.level-faible { background: var(--bg-faible); color: var(--color-faible); }
+    button.heatmap-cell.level-absent { background: var(--bg-absent); color: var(--muted); }
+
+    .verbatim-panel {
+      display: none;
+      margin-top: 20px;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--primary-light);
+      border-radius: 0 8px 8px 0;
+      background: #f8fafc;
+    }
+
+    .verbatim-panel.visible { display: block; }
+
+    .verbatim-panel h4 {
+      margin: 0 0 7px;
+      color: var(--primary);
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .verbatim-panel p {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .matrix-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+      gap: 18px;
+    }
+
+    .project-card {
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #ffffff;
+    }
+
+    .project-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      background: #f8fafc;
+    }
+
+    .project-card-header h3 {
+      margin: 0;
+      color: var(--primary);
+      font-size: 15px;
+    }
+
+    .project-card-body {
+      padding: 16px;
+    }
+
+    .narrative-block {
+      margin-bottom: 12px;
+      padding: 11px;
+      border-radius: 8px;
+      font-size: 13px;
+    }
+
+    .narrative-block:last-child { margin-bottom: 0; }
+
+    .narrative-dominant {
+      border-left: 4px solid var(--color-faible);
+      background: #f0fdf4;
+    }
+
+    .narrative-counter {
+      border-left: 4px solid var(--color-fort);
+      background: #fef2f2;
+    }
+
+    .narrative-title {
+      margin-bottom: 4px;
+      font-size: 10.5px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .narrative-dominant .narrative-title { color: #15803d; }
+    .narrative-counter .narrative-title { color: #b91c1c; }
+
+    .source-note {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Matrice analytique des projets d'infrastructures électriques</h1>
+    <p>Comparaison des vecteurs de conflictualité, des griefs documentés et des récits en présence.</p>
+  </header>
+
+  <main class="container">
+    <nav class="tabs" aria-label="Navigation de la matrice">
+      <button class="tab-btn active" type="button" data-tab="tab-conflict">1. Conflictualité & risques</button>
+      <button class="tab-btn" type="button" data-tab="tab-griefs">2. Matrice des griefs</button>
+      <button class="tab-btn" type="button" data-tab="tab-narratives">3. Matrice des récits</button>
+    </nav>
+
+    <section id="tab-conflict" class="tab-content active">
+      <div class="card">
+        <h2 class="card-title">Matrice comparative des oppositions</h2>
+        <p class="note">Lecture synthétique du niveau de conflictualité à partir des griefs présents dans le corpus fourni.</p>
+
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Projet / site</th>
+                <th>Conflictualité</th>
+                <th>Indices principaux</th>
+                <th>Acteurs / dynamiques documentés</th>
+                <th>Motifs dominants</th>
+                <th>Risque médiatique</th>
+              </tr>
+            </thead>
+            <tbody id="conflict-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-griefs" class="tab-content">
+      <div class="card">
+        <h2 class="card-title">Matrice des oppositions & vecteurs de crise</h2>
+
+        <div class="selector-box">
+          <label for="project-focus">Mettre en valeur un projet :</label>
+          <select id="project-focus">
+            <option value="none">-- Aucun focus --</option>
+          </select>
+        </div>
+
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr id="matrix-header"></tr>
+            </thead>
+            <tbody id="matrix-body"></tbody>
+          </table>
+        </div>
+
+        <div id="verbatim-display" class="verbatim-panel">
+          <h4 id="verbatim-title"></h4>
+          <p id="verbatim-content"></p>
+        </div>
+
+        <div class="legend">
+          <span><strong>Légende :</strong></span>
+          <span style="color:#ef4444;">■ Fort</span>
+          <span style="color:#f97316;">■ Moyen</span>
+          <span style="color:#22c55e;">■ Faible</span>
+          <span style="color:#64748b;">■ Absent / non documenté</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-narratives" class="tab-content">
+      <div class="card">
+        <h2 class="card-title">Matrice d'opposition des récits</h2>
+        <p class="note">Confrontation entre la justification publique ou industrielle du projet et le contre-récit formulé dans le corpus.</p>
+        <div id="narratives-grid" class="matrix-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    "use strict";
+
+    const axes = [
+      { key: "environnement", label: "Env.", full: "Environnement & biodiversité" },
+      { key: "agriculture_foncier", label: "Agric. / foncier", full: "Agriculture & foncier" },
+      { key: "finances", label: "Finances", full: "Finances & indemnisation" },
+      { key: "immobilier_cadre_vie", label: "Cadre de vie", full: "Immobilier & cadre de vie" },
+      { key: "paysage_patrimoine", label: "Paysage", full: "Paysage & patrimoine" },
+      { key: "sante_securite", label: "Santé / sécu.", full: "Santé & sécurité" },
+      { key: "concertation_democratie", label: "Concert.", full: "Concertation & démocratie" },
+      { key: "juridique_procedure", label: "Juridique", full: "Juridique & procédure" },
+      { key: "utilite_besoins_energetiques", label: "Utilité", full: "Utilité publique & besoins énergétiques" },
+      { key: "retombees_locales", label: "Retombées", full: "Retombées locales" },
+      { key: "actions_terrain", label: "Actions", full: "Actions de terrain" },
+      { key: "alternatives_techniques", label: "Alternatives", full: "Alternatives techniques" },
+      { key: "clivages_politiques", label: "Clivages", full: "Clivages politiques" }
+    ];
+
+    const levelLabels = {
+      fort: "Fort",
+      moyen: "Moyen",
+      faible: "Faible",
+      absent: "Absent"
+    };
+
+    const projetsData = [
+      {
+        id: "p-amiens-petit-caux",
+        name: "Ligne THT Amiens - Petit-Caux",
+        conflictLevel: "fort",
+        mediaRisk: "fort",
+        indicators: "Déboisement, atteintes agricoles, désaccord sur les indemnisations, recours annoncés.",
+        actors: "Collectif local, riverains, organisations agricoles et propriétaires fonciers.",
+        motives: "Environnement, agriculture, indemnisation, procédure, justification énergétique.",
+        narratives: {
+          dominant: "Projet présenté comme nécessaire à la sécurisation du réseau et au raccordement de nouveaux besoins électriques.",
+          counter: "Refus d'un sacrifice territorial jugé disproportionné : forêt, exploitation agricole, habitat et bénéfices locaux sont mis en balance avec l'utilité réelle du projet."
+        },
+        griefs: {
+          environnement: {
+            level: "fort",
+            text: "Axe Environnement & biodiversité : Contestation concentrée sur le déboisement de la forêt d'Eu et les impacts sur le busard cendré. Verbatim : « Détruire 10 hectares de forêt est une hérésie » [cite: 26]."
+          },
+          agriculture_foncier: {
+            level: "fort",
+            text: "Axe Agriculture & foncier : Contraintes d'exploitation dénoncées : pertes foncières, entraves aux engins, restrictions liées aux silos et à l'irrigation. Verbatim : « Un pylône, ce n'est pas juste 100 m² de terre. Son impact dépasse largement l'emprise foncière » [cite: 252-253]."
+          },
+          finances: {
+            level: "fort",
+            text: "Axe Finances & indemnisation : Rupture des négociations collectives avec RTE sur des indemnités jugées insuffisantes. Verbatim : « C'est payé tous les neufs ans, à la demande de l'agriculteur. C'est de l'aumône » [cite: 260-261]."
+          },
+          immobilier_cadre_vie: {
+            level: "moyen",
+            text: "Axe Immobilier & cadre de vie : Craintes de dépréciation des habitations proches et d'altération du cadre de vie. Verbatim : « Cela va impacter notre environnement, faire perdre entre 30 et 40 % de la valeur de notre maison » [cite: 45]."
+          },
+          paysage_patrimoine: {
+            level: "moyen",
+            text: "Axe Paysage & patrimoine : Rejet de l'impact visuel associé à environ 180 pylônes de grande hauteur. Verbatim : « Une ligne électrique de 400.000 volts de près de 80 kilomètres, avec des pylônes de 35 à 60 mètres » [cite: 13, 213]."
+          },
+          sante_securite: {
+            level: "absent",
+            text: "Axe Santé & sécurité : Les griefs sanitaires et les risques liés aux ondes ne sont pas explicitement documentés dans le corpus actuel."
+          },
+          concertation_democratie: {
+            level: "moyen",
+            text: "Axe Concertation & démocratie : Érosion de la confiance et appel au boycott des signatures de conventions individuelles. Verbatim : « Les discussions sont au point mort. Les représentants agricoles de la Somme ont décidé de stopper les négociations » [cite: 246]."
+          },
+          juridique_procedure: {
+            level: "fort",
+            text: "Axe Juridique & procédure : Stratégie de contentieux annoncée dès les premières autorisations préfectorales. Verbatim : « Aussitôt les premières autorisations préfectorales délivrées, nous les attaquerons » [cite: 65]."
+          },
+          utilite_besoins_energetiques: {
+            level: "moyen",
+            text: "Axe Utilité publique & besoins énergétiques : Les hypothèses de RTE sur les besoins futurs sont contestées. Verbatim : « RTE est incapable de justifier de manière claire et précise la création de cette ligne » [cite: 36]."
+          },
+          retombees_locales: {
+            level: "moyen",
+            text: "Axe Retombées locales : Dénonciation d'un déséquilibre entre fiscalité communale et préjudices supportés par les exploitants. Verbatim : « Une commune touche de son côté plus de 6000 euros par pylône... alors qu'elle n'est pas propriétaire des terres ! » [cite: 230-231]."
+          },
+          actions_terrain: {
+            level: "faible",
+            text: "Axe Actions de terrain : Risque de mobilisation physique signalé, incluant l'hypothèse d'une zone à défendre. Verbatim : « Cyril Wagner fait référence à la mise en place d'une possible ZAD, une Zone à Défendre, brandie par les opposants »."
+          },
+          alternatives_techniques: {
+            level: "absent",
+            text: "Axe Alternatives techniques : Aucune alternative de tracé ou de technologie n'est explicitement développée dans le fragment matriciel."
+          },
+          clivages_politiques: {
+            level: "absent",
+            text: "Axe Clivages politiques : Clivages partisans non documentés dans le corpus matriciel actuel."
+          }
+        }
+      },
+      {
+        id: "p-celtic-interconnector",
+        name: "Celtic Interconnector",
+        conflictLevel: "faible",
+        mediaRisk: "moyen",
+        indicators: "Retards, hausse possible des coûts, interrogations sur la gouvernance et les flux énergétiques.",
+        actors: "Critiques institutionnelles ponctuelles et interrogations citoyennes sur la gouvernance territoriale.",
+        motives: "Coûts, calendrier, souveraineté énergétique, arbitrages de marché.",
+        narratives: {
+          dominant: "Interconnexion présentée comme un outil de sécurisation des réseaux français et irlandais, soutenu par des financements européens et des bénéfices territoriaux.",
+          counter: "Les critiques portent surtout sur le calendrier, le coût, la gouvernance territoriale et le risque que les flux suivent des arbitrages de marché plutôt qu'un intérêt local."
+        },
+        griefs: {
+          environnement: {
+            level: "faible",
+            text: "Axe Environnement & biodiversité : Mesures d'éco-conception et de suivi écologique documentées sur le tracé terrestre. Verbatim : « Mandaté par le client, un écologue spécialisé dans la protection d'espèces animales menacées... a été chargé d'inspecter chaque zone avant le lancement des travaux » [cite: 2]."
+          },
+          agriculture_foncier: {
+            level: "faible",
+            text: "Axe Agriculture & foncier : Nuisances foncières localisées, avec modification antérieure d'un itinéraire après contestation. Verbatim : « C'est aussi à La Martyre qu'un agriculteur s'était élevé contre le tracé initialement proposé. L'itinéraire a finalement été modifié » [cite: 2]."
+          },
+          finances: {
+            level: "moyen",
+            text: "Axe Finances & indemnisation : Signal de hausse budgétaire lié aux difficultés techniques et aux retards. Verbatim : « Delays to the completion of a power line linking the Irish and French electricity networks could increase the costs of the project to about €2 billion from €1.62 billion » [cite: 2]."
+          },
+          immobilier_cadre_vie: {
+            level: "absent",
+            text: "Axe Immobilier & cadre de vie : Aucun grief documenté concernant une dévalorisation immobilière ou résidentielle le long de la liaison enterrée."
+          },
+          paysage_patrimoine: {
+            level: "faible",
+            text: "Axe Paysage & patrimoine : Impact visuel limité par le caractère sous-marin et enterré de la liaison. Verbatim : « Les dernières interventions, notamment paysagères, se poursuivront jusqu'en septembre 2026 » [cite: 2]."
+          },
+          sante_securite: {
+            level: "absent",
+            text: "Axe Santé & sécurité : Aucun grief sanitaire formalisé relatif aux champs magnétiques ou à la santé publique n'est documenté."
+          },
+          concertation_democratie: {
+            level: "faible",
+            text: "Axe Concertation & démocratie : Processus décrit comme globalement fluide, incluant un fonds de bénéfice communautaire. Verbatim : « Communities in east Cork received over €820,000 from the second phase of the Celtic Interconnector Community Benefit Fund » [cite: 2]."
+          },
+          juridique_procedure: {
+            level: "faible",
+            text: "Axe Juridique & procédure : Recours limité aux servitudes légales pour les parcelles sans accord amiable. Verbatim : « Cela permet au Réseau de transport d'électricité (RTE)... de mettre en servitude les dernières parcelles pour qui aucun accord à l'amiable n'a été trouvé » [cite: 2]."
+          },
+          utilite_besoins_energetiques: {
+            level: "moyen",
+            text: "Axe Utilité publique & besoins énergétiques : Légitimité macro-énergétique solide mais interrogations sur la gouvernance des flux. Verbatim : « Le projet entre dans sa phase finale... Cependant, cette avancée soulève aussi des interrogations. La Bretagne a-t-elle réellement choisi ce projet ? » [cite: 2]."
+          },
+          retombees_locales: {
+            level: "faible",
+            text: "Axe Retombées locales : Retombées industrielles identifiées, malgré une interrogation sur la répartition des bénéfices à long terme. Verbatim : « Les retombées économiques locales s'élèvent à 13 millions d'€... Pour les faits, ce câble vise avant tout à sécuriser l'approvisionnement électrique de l'Irlande » [cite: 2]."
+          },
+          actions_terrain: {
+            level: "absent",
+            text: "Axe Actions de terrain : Aucune action directe, occupation ou blocage physique n'est documenté dans le corpus."
+          },
+          alternatives_techniques: {
+            level: "absent",
+            text: "Axe Alternatives techniques : Aucune alternative technique structurée n'est documentée dans le corpus matriciel actuel."
+          },
+          clivages_politiques: {
+            level: "absent",
+            text: "Axe Clivages politiques : Aucun clivage partisan structurant n'est formalisé dans le corpus."
+          }
+        }
+      },
+      {
+        id: "p-golfe-de-gascogne",
+        name: "Interconnexion Golfe de Gascogne",
+        conflictLevel: "fort",
+        mediaRisk: "fort",
+        indicators: "Avis défavorable du CNPN, contentieux, enjeux sanitaires, actions de terrain et opposition environnementale.",
+        actors: "Collectifs, riverains, militants et acteurs de la défense environnementale.",
+        motives: "Environnement marin, santé, démocratie, procédure, alternatives de tracé.",
+        narratives: {
+          dominant: "Projet présenté comme une interconnexion européenne stratégique, avec enfouissement du tracé terrestre et amélioration paysagère attendue.",
+          counter: "Le contre-récit dénonce une expérimentation sanitaire et environnementale imposée, un déficit démocratique et l'écartement d'alternatives de tracé."
+        },
+        griefs: {
+          environnement: {
+            level: "fort",
+            text: "Axe Environnement & biodiversité : Tension ravivée par l'avis défavorable du CNPN et l'échouage d'un cétacé à proximité des opérations. Verbatim : « Une baleine à bec s'échoue et meurt face au câblier de RTE mais bien sûr, cela n'aura aucun rapport » [cite: 3]."
+          },
+          agriculture_foncier: {
+            level: "absent",
+            text: "Axe Agriculture & foncier : L'impact sur les activités agricoles et les terres cultivées n'est pas mentionné dans le périmètre direct du projet."
+          },
+          finances: {
+            level: "faible",
+            text: "Axe Finances & indemnisation : Financement européen et bancaire identifié, malgré une hausse marquée du coût prévisionnel. Verbatim : « Les prévisions actuelles font désormais état d'un coût prévisionnel de 2 850 millions d'euros » [cite: 3]."
+          },
+          immobilier_cadre_vie: {
+            level: "moyen",
+            text: "Axe Immobilier & cadre de vie : Inquiétudes liées à la proximité du câble avec les quartiers, maisons et campings. Verbatim : « Le contournement terrestre par les Landes devrait être enterré à moins de 100 mètres de plusieurs quartiers, maisons, campings » [cite: 3]."
+          },
+          paysage_patrimoine: {
+            level: "faible",
+            text: "Axe Paysage & patrimoine : Impact visuel terrestre limité par l'enfouissement et la suppression annoncée de lignes existantes. Verbatim : « Ce projet est enfoui et prévoit l'élimination de lignes existantes pour améliorer l'impact paysager » [cite: 3]."
+          },
+          sante_securite: {
+            level: "fort",
+            text: "Axe Santé & sécurité : Contestation majeure sur l'absence alléguée d'évaluation des impacts sanitaires. Verbatim : « Ce projet n'a pas eu d'évaluation d'impact sur la santé humaine. On est sur une expérimentation. On ne veut pas être des cobayes » [cite: 3]."
+          },
+          concertation_democratie: {
+            level: "fort",
+            text: "Axe Concertation & démocratie : Sentiment de passage en force malgré les avis défavorables exprimés lors des enquêtes. Verbatim : « La forêt est sacrifiée sur plusieurs kilomètres... on est face à un vrai déni de démocratie » [cite: 3]."
+          },
+          juridique_procedure: {
+            level: "fort",
+            text: "Axe Juridique & procédure : Multiplication des recours et antécédents de suspension des sondages. Verbatim : « La justice sera le seul rempart qui pourra freiner les abus de pouvoir de l'État » [cite: 3]."
+          },
+          utilite_besoins_energetiques: {
+            level: "moyen",
+            text: "Axe Utilité publique & besoins énergétiques : Intérêt européen reconnu mais contestation locale des choix de tracé. Verbatim : « Une alternative terrestre du tracé, le long de l'autoroute n'a pas été prise davantage en considération » [cite: 3]."
+          },
+          retombees_locales: {
+            level: "faible",
+            text: "Axe Retombées locales : Retombées industrielles régionales signalées mais jugées asymétriques face aux nuisances. Verbatim : « Un projet qui menace notre territoire » [cite: 3]."
+          },
+          actions_terrain: {
+            level: "moyen",
+            text: "Axe Actions de terrain : Occupation sylvestre documentée sur le tracé. Verbatim : « Cinq militants... se sont installés depuis le 4 janvier dernier sur le tracé du projet, au milieu de la forêt landaise » [cite: 3]."
+          },
+          alternatives_techniques: {
+            level: "moyen",
+            text: "Axe Alternatives techniques : Une alternative de tracé terrestre le long de l'autoroute est évoquée comme insuffisamment étudiée. Verbatim : « Une alternative terrestre du tracé, le long de l'autoroute n'a pas été prise davantage en considération » [cite: 3]."
+          },
+          clivages_politiques: {
+            level: "absent",
+            text: "Axe Clivages politiques : Aucun clivage partisan documenté spécifiquement dans le corpus matriciel."
+          }
+        }
+      },
+      {
+        id: "p-gard-fos",
+        name: "Ligne THT 400 kV Gard - Fos",
+        conflictLevel: "fort",
+        mediaRisk: "fort",
+        indicators: "Opposition territoriale transpartisane, risque écologique, enjeux paysagers, actions de terrain et alternatives revendiquées.",
+        actors: "Élus locaux, parlementaires, agriculteurs, riverains et collectifs environnementaux.",
+        motives: "Biodiversité, Camargue, agriculture, paysage, besoins énergétiques, cadre de vie.",
+        narratives: {
+          dominant: "Projet justifié par des besoins de raccordement et de sécurisation électrique, dans un contexte de développement industriel régional.",
+          counter: "Le contre-récit décrit une atteinte irréversible à la Camargue, à son économie, à sa biodiversité et à son patrimoine, avec un refus du passage en force."
+        },
+        griefs: {
+          environnement: {
+            level: "fort",
+            text: "Axe Environnement & biodiversité : Risque majeur pour l'avifaune migratrice de Camargue. Verbatim : « La première cause de mortalité non naturelle » des grands échassiers est associée aux collisions avec les câbles THT."
+          },
+          agriculture_foncier: {
+            level: "fort",
+            text: "Axe Agriculture & foncier : Le tracé est décrit comme coupant rizières et élevages de chevaux de Camargue. Verbatim : « Une violation de la propriété privée » est évoquée à propos des carottages autorisés de jour comme de nuit."
+          },
+          finances: {
+            level: "absent",
+            text: "Axe Finances & indemnisation : Aucun différend financier ou dispositif d'indemnisation n'est explicitement documenté dans le corpus matriciel."
+          },
+          immobilier_cadre_vie: {
+            level: "fort",
+            text: "Axe Immobilier & cadre de vie : Sentiment d'exaspération face à la transformation durable de l'environnement direct. Verbatim : « Une balafre au milieu de ce joyau »."
+          },
+          paysage_patrimoine: {
+            level: "fort",
+            text: "Axe Paysage & patrimoine : Risque d'atteinte à la candidature Unesco et à la valeur patrimoniale de la Camargue. Verbatim : « Balafrer notre Camargue »."
+          },
+          sante_securite: {
+            level: "moyen",
+            text: "Axe Santé & sécurité : Demande d'évaluations rigoureuses des risques liés aux champs électromagnétiques pour les habitants et les élevages."
+          },
+          concertation_democratie: {
+            level: "fort",
+            text: "Axe Concertation & démocratie : Dénonciation d'un passage en force et d'un dialogue de sourds. Verbatim : « Passage en force » et « dialogue de sourds »."
+          },
+          juridique_procedure: {
+            level: "absent",
+            text: "Axe Juridique & procédure : Aucun recours ou contentieux explicite n'est documenté dans le corpus matriciel actuel."
+          },
+          utilite_besoins_energetiques: {
+            level: "fort",
+            text: "Axe Utilité publique & besoins énergétiques : Contestation forte des projections de besoins avancées par RTE. Verbatim : « Les objectifs énergétiques ne correspondent pas à la réalité »."
+          },
+          retombees_locales: {
+            level: "fort",
+            text: "Axe Retombées locales : Crainte d'une fragilisation des modèles d'agritourisme, d'écotourisme et des cultures AOC. Verbatim : « Met aussi à mal l'économie de notre territoire »."
+          },
+          actions_terrain: {
+            level: "fort",
+            text: "Axe Actions de terrain : Escalade de la contestation avec barrages filtrants et préparation de tactiques de blocage. Verbatim : « Notre-Dame de Camargue »."
+          },
+          alternatives_techniques: {
+            level: "fort",
+            text: "Axe Alternatives techniques : Revendication d'enfouissement partiel, de jumelage avec le contournement autoroutier d'Arles ou de solutions alternatives. Verbatim : « Le remplacement par des SMR » est cité parmi les alternatives."
+          },
+          clivages_politiques: {
+            level: "absent",
+            text: "Axe Clivages politiques : Absence de clivage partisan documentée, avec une union transpartisane des élus opposés ou critiques."
+          }
+        }
+      }
+    ];
+
+    function classForLevel(level) {
+      return "level-" + level;
+    }
+
+    function gaugeForLevel(level) {
+      if (level === "fort") return "gauge-fort";
+      if (level === "moyen") return "gauge-moyen";
+      return "gauge-faible";
+    }
+
+    function createBadge(level) {
+      const badge = document.createElement("span");
+      badge.className = "dot-indicator " + classForLevel(level);
+      badge.textContent = levelLabels[level];
+      return badge;
+    }
+
+    function createCell(text, isStrong) {
+      const td = document.createElement("td");
+      if (isStrong) {
+        const strong = document.createElement("strong");
+        strong.textContent = text;
+        td.appendChild(strong);
+      } else {
+        td.textContent = text;
+      }
+      return td;
+    }
+
+    function renderConflictTable() {
+      const body = document.getElementById("conflict-body");
+      body.innerHTML = "";
+
+      projetsData.forEach(function(project) {
+        const row = document.createElement("tr");
+        row.id = "conflict-" + project.id;
+
+        row.appendChild(createCell(project.name, true));
+
+        const conflictCell = document.createElement("td");
+        conflictCell.appendChild(createBadge(project.conflictLevel));
+        row.appendChild(conflictCell);
+
+        row.appendChild(createCell(project.indicators, false));
+        row.appendChild(createCell(project.actors, false));
+        row.appendChild(createCell(project.motives, false));
+
+        const mediaCell = document.createElement("td");
+        mediaCell.appendChild(createBadge(project.mediaRisk));
+
+        if (project.mediaRisk !== "absent") {
+          const gauge = document.createElement("div");
+          gauge.className = "gauge";
+          const fill = document.createElement("span");
+          fill.className = gaugeForLevel(project.mediaRisk);
+          gauge.appendChild(fill);
+          mediaCell.appendChild(gauge);
+        }
+
+        row.appendChild(mediaCell);
+        body.appendChild(row);
+      });
+    }
+
+    function renderMatrixHeader() {
+      const header = document.getElementById("matrix-header");
+      header.innerHTML = "";
+
+      const projectHeader = document.createElement("th");
+      projectHeader.textContent = "Projet / site";
+      header.appendChild(projectHeader);
+
+      axes.forEach(function(axis) {
+        const th = document.createElement("th");
+        th.textContent = axis.label;
+        th.title = axis.full;
+        th.style.textAlign = "center";
+        header.appendChild(th);
+      });
+    }
+
+    function showVerbatim(projectId, axisKey) {
+      const project = projetsData.find(function(item) {
+        return item.id === projectId;
+      });
+
+      const axis = axes.find(function(item) {
+        return item.key === axisKey;
+      });
+
+      if (!project || !axis) return;
+
+      const item = project.griefs[axisKey];
+      const panel = document.getElementById("verbatim-display");
+      const title = document.getElementById("verbatim-title");
+      const content = document.getElementById("verbatim-content");
+
+      title.textContent = project.name + " — " + axis.full + " (" + levelLabels[item.level] + ")";
+      content.textContent = item.text;
+      panel.classList.add("visible");
+    }
+
+    function renderMatrixBody() {
+      const body = document.getElementById("matrix-body");
+      body.innerHTML = "";
+
+      projetsData.forEach(function(project) {
+        const row = document.createElement("tr");
+        row.id = "matrix-" + project.id;
+        row.dataset.projectId = project.id;
+
+        row.appendChild(createCell(project.name, true));
+
+        axes.forEach(function(axis) {
+          const grievance = project.griefs[axis.key];
+          const td = document.createElement("td");
+          td.style.padding = "0";
+          td.style.textAlign = "center";
+
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "heatmap-cell " + classForLevel(grievance.level);
+          button.textContent = levelLabels[grievance.level];
+          button.title = project.name + " — " + axis.full;
+          button.addEventListener("click", function() {
+            showVerbatim(project.id, axis.key);
+          });
+
+          td.appendChild(button);
+          row.appendChild(td);
+        });
+
+        body.appendChild(row);
+      });
+    }
+
+    function renderFocusSelector() {
+      const selector = document.getElementById("project-focus");
+
+      projetsData.forEach(function(project) {
+        const option = document.createElement("option");
+        option.value = project.id;
+        option.textContent = project.name;
+        selector.appendChild(option);
+      });
+
+      selector.addEventListener("change", function(event) {
+        document.querySelectorAll("#matrix-body tr").forEach(function(row) {
+          row.classList.remove("highlighted-row");
+        });
+
+        if (event.target.value !== "none") {
+          const row = document.getElementById("matrix-" + event.target.value);
+          if (row) row.classList.add("highlighted-row");
+        }
+      });
+    }
+
+    function renderNarratives() {
+      const grid = document.getElementById("narratives-grid");
+      grid.innerHTML = "";
+
+      projetsData.forEach(function(project) {
+        const card = document.createElement("article");
+        card.className = "project-card";
+
+        const header = document.createElement("div");
+        header.className = "project-card-header";
+
+        const title = document.createElement("h3");
+        title.textContent = project.name;
+
+        header.appendChild(title);
+        header.appendChild(createBadge(project.conflictLevel));
+
+        const body = document.createElement("div");
+        body.className = "project-card-body";
+
+        const dominant = document.createElement("div");
+        dominant.className = "narrative-block narrative-dominant";
+
+        const dominantTitle = document.createElement("div");
+        dominantTitle.className = "narrative-title";
+        dominantTitle.textContent = "Récit dominant";
+
+        const dominantText = document.createElement("div");
+        dominantText.textContent = project.narratives.dominant;
+
+        dominant.appendChild(dominantTitle);
+        dominant.appendChild(dominantText);
+
+        const counter = document.createElement("div");
+        counter.className = "narrative-block narrative-counter";
+
+        const counterTitle = document.createElement("div");
+        counterTitle.className = "narrative-title";
+        counterTitle.textContent = "Contre-récit dominant";
+
+        const counterText = document.createElement("div");
+        counterText.textContent = project.narratives.counter;
+
+        counter.appendChild(counterTitle);
+        counter.appendChild(counterText);
+
+        body.appendChild(dominant);
+        body.appendChild(counter);
+
+        card.appendChild(header);
+        card.appendChild(body);
+        grid.appendChild(card);
+      });
+    }
+
+    function initTabs() {
+      const buttons = document.querySelectorAll(".tab-btn");
+      const panels = document.querySelectorAll(".tab-content");
+
+      buttons.forEach(function(button) {
+        button.addEventListener("click", function() {
+          const target = button.dataset.tab;
+
+          buttons.forEach(function(item) {
+            item.classList.remove("active");
+          });
+
+          panels.forEach(function(panel) {
+            panel.classList.remove("active");
+          });
+
+          button.classList.add("active");
+          document.getElementById(target).classList.add("active");
+        });
+      });
+    }
+
+    renderConflictTable();
+    renderMatrixHeader();
+    renderMatrixBody();
+    renderFocusSelector();
+    renderNarratives();
+    initTabs();
+  </script>
+</body>
+</html>
