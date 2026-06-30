@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Matrice comparative des infrastructures électriques</title>
+
   <style>
     :root {
       --bg: #f1f5f9;
@@ -13,23 +14,27 @@
       --border: #e2e8f0;
       --primary: #1e1b4b;
       --primary-light: #4338ca;
+
       --color-fort: #ef4444;
       --color-moyen: #f97316;
       --color-faible: #22c55e;
       --color-absent: #94a3b8;
+
       --bg-fort: #fee2e2;
       --bg-moyen: #ffedd5;
       --bg-faible: #dcfce7;
       --bg-absent: #f1f5f9;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
-      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background: var(--bg);
       color: var(--text-main);
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       line-height: 1.5;
     }
 
@@ -68,10 +73,10 @@
 
     .tab-btn {
       flex: 0 0 auto;
-      border: 0;
-      border-bottom: 2px solid transparent;
       margin-bottom: -2px;
       padding: 12px 18px;
+      border: 0;
+      border-bottom: 2px solid transparent;
       background: transparent;
       color: var(--muted);
       font-size: 14px;
@@ -88,8 +93,13 @@
       border-bottom-color: var(--primary-light);
     }
 
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
 
     .card {
       margin-bottom: 24px;
@@ -118,8 +128,8 @@
     }
 
     .table-responsive {
-      overflow-x: auto;
       width: 100%;
+      overflow-x: auto;
       border: 1px solid var(--border);
       border-radius: 8px;
     }
@@ -132,8 +142,8 @@
 
     th {
       padding: 12px 14px;
-      background: #f8fafc;
       border-bottom: 2px solid var(--border);
+      background: #f8fafc;
       color: var(--muted);
       font-size: 10.5px;
       font-weight: 800;
@@ -149,13 +159,12 @@
       vertical-align: top;
     }
 
-    tr:last-child td { border-bottom: 0; }
-    tr:hover td { background: #f8fafc; }
+    tr:last-child td {
+      border-bottom: 0;
+    }
 
-    .highlighted-row td {
-      background: #f5f3ff !important;
-      outline: 2px solid var(--primary-light);
-      outline-offset: -2px;
+    #conflict-table tbody tr:hover td {
+      background: #f8fafc;
     }
 
     .dot-indicator {
@@ -171,17 +180,32 @@
     }
 
     .dot-indicator::before {
-      content: "";
       width: 8px;
       height: 8px;
       border-radius: 50%;
       background: currentColor;
+      content: "";
     }
 
-    .level-fort { color: #b91c1c; background: var(--bg-fort); }
-    .level-moyen { color: #c2410c; background: var(--bg-moyen); }
-    .level-faible { color: #15803d; background: var(--bg-faible); }
-    .level-absent { color: #475569; background: var(--bg-absent); }
+    .level-fort {
+      color: #b91c1c;
+      background: var(--bg-fort);
+    }
+
+    .level-moyen {
+      color: #c2410c;
+      background: var(--bg-moyen);
+    }
+
+    .level-faible {
+      color: #15803d;
+      background: var(--bg-faible);
+    }
+
+    .level-absent {
+      color: #475569;
+      background: var(--bg-absent);
+    }
 
     .gauge {
       width: 100%;
@@ -198,9 +222,20 @@
       border-radius: inherit;
     }
 
-    .gauge-fort { width: 100%; background: var(--color-fort); }
-    .gauge-moyen { width: 62%; background: var(--color-moyen); }
-    .gauge-faible { width: 30%; background: var(--color-faible); }
+    .gauge-fort {
+      width: 100%;
+      background: var(--color-fort);
+    }
+
+    .gauge-moyen {
+      width: 62%;
+      background: var(--color-moyen);
+    }
+
+    .gauge-faible {
+      width: 30%;
+      background: var(--color-faible);
+    }
 
     .selector-box {
       display: flex;
@@ -221,36 +256,92 @@
       font-size: 13px;
     }
 
-    td.matrix-cell {
-  padding: 0 !important;
-  height: 48px;
-}
+    /* ===========================
+       MATRICE DES GRIEFS
+       La couleur est posée sur TD.
+       =========================== */
 
-button.heatmap-cell {
-  display: block;
-  width: 100%;
-  min-width: 100%;
-  height: 100%;
-  min-height: 48px;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  text-align: center;
-  font-size: 10px;
-  font-weight: 800;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
-    .heatmap-cell:hover {
-      box-shadow: inset 0 0 0 2px rgba(15, 23, 42, 0.16);
+    #matrix-table {
+      min-width: 1450px;
     }
 
-    button.heatmap-cell.level-fort { background: var(--bg-fort); color: var(--color-fort); }
-    button.heatmap-cell.level-moyen { background: var(--bg-moyen); color: var(--color-moyen); }
-    button.heatmap-cell.level-faible { background: var(--bg-faible); color: var(--color-faible); }
-    button.heatmap-cell.level-absent { background: var(--bg-absent); color: var(--muted); }
+    #matrix-table th {
+      min-width: 88px;
+      text-align: center;
+    }
+
+    #matrix-table th:first-child {
+      min-width: 235px;
+      text-align: left;
+    }
+
+    #matrix-table td:first-child {
+      min-width: 235px;
+      vertical-align: middle;
+    }
+
+    #matrix-table td.matrix-cell {
+      min-width: 88px;
+      height: 54px;
+      padding: 0 !important;
+      vertical-align: middle;
+      text-align: center;
+    }
+
+    #matrix-table td.matrix-cell.level-fort {
+      background-color: var(--bg-fort) !important;
+      color: var(--color-fort);
+    }
+
+    #matrix-table td.matrix-cell.level-moyen {
+      background-color: var(--bg-moyen) !important;
+      color: var(--color-moyen);
+    }
+
+    #matrix-table td.matrix-cell.level-faible {
+      background-color: var(--bg-faible) !important;
+      color: var(--color-faible);
+    }
+
+    #matrix-table td.matrix-cell.level-absent {
+      background-color: var(--bg-absent) !important;
+      color: var(--muted);
+    }
+
+    #matrix-table button.matrix-cell-button {
+      display: flex;
+      width: 100%;
+      min-height: 54px;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      padding: 0 8px;
+      border: 0;
+      border-radius: 0;
+      outline: none;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      text-align: center;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    #matrix-table button.matrix-cell-button:hover,
+    #matrix-table button.matrix-cell-button:focus-visible {
+      box-shadow: inset 0 0 0 2px rgba(15, 23, 42, 0.2);
+    }
+
+    #matrix-table tbody tr:hover td:not(.matrix-cell) {
+      background: #f8fafc;
+    }
+
+    #matrix-table tbody tr.highlighted-row td {
+      box-shadow: inset 0 0 0 2px var(--primary-light);
+    }
 
     .verbatim-panel {
       display: none;
@@ -262,7 +353,9 @@ button.heatmap-cell {
       background: #f8fafc;
     }
 
-    .verbatim-panel.visible { display: block; }
+    .verbatim-panel.visible {
+      display: block;
+    }
 
     .verbatim-panel h4 {
       margin: 0 0 7px;
@@ -301,8 +394,8 @@ button.heatmap-cell {
 
     .project-card-header {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       gap: 12px;
       padding: 14px 16px;
       border-bottom: 1px solid var(--border);
@@ -326,7 +419,9 @@ button.heatmap-cell {
       font-size: 13px;
     }
 
-    .narrative-block:last-child { margin-bottom: 0; }
+    .narrative-block:last-child {
+      margin-bottom: 0;
+    }
 
     .narrative-dominant {
       border-left: 4px solid var(--color-faible);
@@ -346,13 +441,12 @@ button.heatmap-cell {
       text-transform: uppercase;
     }
 
-    .narrative-dominant .narrative-title { color: #15803d; }
-    .narrative-counter .narrative-title { color: #b91c1c; }
+    .narrative-dominant .narrative-title {
+      color: #15803d;
+    }
 
-    .source-note {
-      margin-top: 18px;
-      color: var(--muted);
-      font-size: 12px;
+    .narrative-counter .narrative-title {
+      color: #b91c1c;
     }
   </style>
 </head>
@@ -365,18 +459,26 @@ button.heatmap-cell {
 
   <main class="container">
     <nav class="tabs" aria-label="Navigation de la matrice">
-      <button class="tab-btn active" type="button" data-tab="tab-conflict">1. Conflictualité & risques</button>
-      <button class="tab-btn" type="button" data-tab="tab-griefs">2. Matrice des griefs</button>
-      <button class="tab-btn" type="button" data-tab="tab-narratives">3. Matrice des récits</button>
+      <button class="tab-btn active" type="button" data-tab="tab-conflict">
+        1. Conflictualité & risques
+      </button>
+      <button class="tab-btn" type="button" data-tab="tab-griefs">
+        2. Matrice des griefs
+      </button>
+      <button class="tab-btn" type="button" data-tab="tab-narratives">
+        3. Matrice des récits
+      </button>
     </nav>
 
     <section id="tab-conflict" class="tab-content active">
       <div class="card">
         <h2 class="card-title">Matrice comparative des oppositions</h2>
-        <p class="note">Lecture synthétique du niveau de conflictualité à partir des griefs présents dans le corpus fourni.</p>
+        <p class="note">
+          Lecture synthétique du niveau de conflictualité à partir des griefs présents dans le corpus fourni.
+        </p>
 
         <div class="table-responsive">
-          <table>
+          <table id="conflict-table">
             <thead>
               <tr>
                 <th>Projet / site</th>
@@ -405,7 +507,7 @@ button.heatmap-cell {
         </div>
 
         <div class="table-responsive">
-          <table>
+          <table id="matrix-table">
             <thead>
               <tr id="matrix-header"></tr>
             </thead>
@@ -431,7 +533,9 @@ button.heatmap-cell {
     <section id="tab-narratives" class="tab-content">
       <div class="card">
         <h2 class="card-title">Matrice d'opposition des récits</h2>
-        <p class="note">Confrontation entre la justification publique ou industrielle du projet et le contre-récit formulé dans le corpus.</p>
+        <p class="note">
+          Confrontation entre la justification publique ou industrielle du projet et le contre-récit formulé dans le corpus.
+        </p>
         <div id="narratives-grid" class="matrix-grid"></div>
       </div>
     </section>
@@ -751,35 +855,36 @@ button.heatmap-cell {
       return badge;
     }
 
-    function createCell(text, isStrong) {
+    function createTextCell(text, strong) {
       const td = document.createElement("td");
-      if (isStrong) {
-        const strong = document.createElement("strong");
-        strong.textContent = text;
-        td.appendChild(strong);
+
+      if (strong) {
+        const element = document.createElement("strong");
+        element.textContent = text;
+        td.appendChild(element);
       } else {
         td.textContent = text;
       }
+
       return td;
     }
 
     function renderConflictTable() {
       const body = document.getElementById("conflict-body");
-      body.innerHTML = "";
+      body.replaceChildren();
 
       projetsData.forEach(function(project) {
         const row = document.createElement("tr");
-        row.id = "conflict-" + project.id;
 
-        row.appendChild(createCell(project.name, true));
+        row.appendChild(createTextCell(project.name, true));
 
         const conflictCell = document.createElement("td");
         conflictCell.appendChild(createBadge(project.conflictLevel));
         row.appendChild(conflictCell);
 
-        row.appendChild(createCell(project.indicators, false));
-        row.appendChild(createCell(project.actors, false));
-        row.appendChild(createCell(project.motives, false));
+        row.appendChild(createTextCell(project.indicators, false));
+        row.appendChild(createTextCell(project.actors, false));
+        row.appendChild(createTextCell(project.motives, false));
 
         const mediaCell = document.createElement("td");
         mediaCell.appendChild(createBadge(project.mediaRisk));
@@ -787,8 +892,10 @@ button.heatmap-cell {
         if (project.mediaRisk !== "absent") {
           const gauge = document.createElement("div");
           gauge.className = "gauge";
+
           const fill = document.createElement("span");
           fill.className = gaugeForLevel(project.mediaRisk);
+
           gauge.appendChild(fill);
           mediaCell.appendChild(gauge);
         }
@@ -799,10 +906,8 @@ button.heatmap-cell {
     }
 
     function renderMatrixHeader() {
-      const td = document.createElement("td");
-      td.className = "matrix-cell";
       const header = document.getElementById("matrix-header");
-      header.innerHTML = "";
+      header.replaceChildren();
 
       const projectHeader = document.createElement("th");
       projectHeader.textContent = "Projet / site";
@@ -812,7 +917,6 @@ button.heatmap-cell {
         const th = document.createElement("th");
         th.textContent = axis.label;
         th.title = axis.full;
-        th.style.textAlign = "center";
         header.appendChild(th);
       });
     }
@@ -826,40 +930,43 @@ button.heatmap-cell {
         return item.key === axisKey;
       });
 
-      if (!project || !axis) return;
+      if (!project || !axis) {
+        return;
+      }
 
-      const item = project.griefs[axisKey];
-      const panel = document.getElementById("verbatim-display");
-      const title = document.getElementById("verbatim-title");
-      const content = document.getElementById("verbatim-content");
+      const grievance = project.griefs[axisKey];
 
-      title.textContent = project.name + " — " + axis.full + " (" + levelLabels[item.level] + ")";
-      content.textContent = item.text;
-      panel.classList.add("visible");
+      document.getElementById("verbatim-title").textContent =
+        project.name + " — " + axis.full + " (" + levelLabels[grievance.level] + ")";
+
+      document.getElementById("verbatim-content").textContent = grievance.text;
+
+      document.getElementById("verbatim-display").classList.add("visible");
     }
 
     function renderMatrixBody() {
       const body = document.getElementById("matrix-body");
-      body.innerHTML = "";
+      body.replaceChildren();
 
       projetsData.forEach(function(project) {
         const row = document.createElement("tr");
         row.id = "matrix-" + project.id;
-        row.dataset.projectId = project.id;
 
-        row.appendChild(createCell(project.name, true));
+        row.appendChild(createTextCell(project.name, true));
 
         axes.forEach(function(axis) {
           const grievance = project.griefs[axis.key];
+
           const td = document.createElement("td");
-          td.style.padding = "0";
-          td.style.textAlign = "center";
+          td.className = "matrix-cell " + classForLevel(grievance.level);
 
           const button = document.createElement("button");
           button.type = "button";
-          button.className = "heatmap-cell " + classForLevel(grievance.level);
+          button.className = "matrix-cell-button";
           button.textContent = levelLabels[grievance.level];
           button.title = project.name + " — " + axis.full;
+          button.setAttribute("aria-label", project.name + " — " + axis.full + " — " + levelLabels[grievance.level]);
+
           button.addEventListener("click", function() {
             showVerbatim(project.id, axis.key);
           });
@@ -874,6 +981,12 @@ button.heatmap-cell {
 
     function renderFocusSelector() {
       const selector = document.getElementById("project-focus");
+      selector.replaceChildren();
+
+      const defaultOption = document.createElement("option");
+      defaultOption.value = "none";
+      defaultOption.textContent = "-- Aucun focus --";
+      selector.appendChild(defaultOption);
 
       projetsData.forEach(function(project) {
         const option = document.createElement("option");
@@ -888,15 +1001,18 @@ button.heatmap-cell {
         });
 
         if (event.target.value !== "none") {
-          const row = document.getElementById("matrix-" + event.target.value);
-          if (row) row.classList.add("highlighted-row");
+          const selectedRow = document.getElementById("matrix-" + event.target.value);
+
+          if (selectedRow) {
+            selectedRow.classList.add("highlighted-row");
+          }
         }
       });
     }
 
     function renderNarratives() {
       const grid = document.getElementById("narratives-grid");
-      grid.innerHTML = "";
+      grid.replaceChildren();
 
       projetsData.forEach(function(project) {
         const card = document.createElement("article");
@@ -945,6 +1061,7 @@ button.heatmap-cell {
 
         card.appendChild(header);
         card.appendChild(body);
+
         grid.appendChild(card);
       });
     }
@@ -955,7 +1072,7 @@ button.heatmap-cell {
 
       buttons.forEach(function(button) {
         button.addEventListener("click", function() {
-          const target = button.dataset.tab;
+          const targetId = button.dataset.tab;
 
           buttons.forEach(function(item) {
             item.classList.remove("active");
@@ -966,7 +1083,7 @@ button.heatmap-cell {
           });
 
           button.classList.add("active");
-          document.getElementById(target).classList.add("active");
+          document.getElementById(targetId).classList.add("active");
         });
       });
     }
